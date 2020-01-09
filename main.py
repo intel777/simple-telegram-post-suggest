@@ -106,8 +106,8 @@ def photo_handler(update: Update, context: CallbackContext):
 
     print('[Predlozhka][photo_handler]Sending message to admin...')
     buttons = [
-        [InlineKeyboardButton('✅', callback_data=str({'post': post.post_id, 'action': 'accept'})),
-         InlineKeyboardButton('❌', callback_data=str({'post': post.post_id, 'action': 'decline'}))]
+        [InlineKeyboardButton('✅', callback_data=json.dumps({'post': post.post_id, 'action': 'accept'})),
+         InlineKeyboardButton('❌', callback_data=json.dumps({'post': post.post_id, 'action': 'decline'}))]
     ]
     updater.bot.send_photo(db.query(User).filter_by(is_admin=True).first().user_id, open(post.attachment_path, 'rb'),
                            post.text, reply_markup=InlineKeyboardMarkup(buttons))
@@ -122,7 +122,7 @@ def callback_handler(update: Update, context: CallbackContext):
     db = Session()
     if db.query(User).filter_by(user_id=update.effective_user.id).first().is_admin:
         print('[Predlozhka][callback_handler][auth_ring]Authentication successful')
-        data = json.loads(update.callback_query.data.replace("\'", "\""))
+        data = json.loads(update.callback_query.data)
         print('[Predlozhka][callback_handler]Data: {}'.format(data))
         post = db.query(Post).filter_by(post_id=data['post']).first()
         if post:
