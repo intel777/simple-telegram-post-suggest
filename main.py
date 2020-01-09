@@ -154,7 +154,7 @@ print('[Predlozhka]All init related stuff done. Waiting for something to happen.
 
 updater.dispatcher.add_handler(CommandHandler('start', start))
 updater.dispatcher.add_handler(CommandHandler('init', initialize))
-updater.dispatcher.add_handler(MessageHandler(Filters.photo, photo_handler))
+updater.dispatcher.add_handler(MessageHandler(Filters.photo & Filters.private, photo_handler))
 updater.dispatcher.add_handler(CallbackQueryHandler(callback_handler))
 
 updater.start_polling()
