@@ -131,7 +131,7 @@ def callback_handler(update: Update, context: CallbackContext):
                 print('[Predlozhka][callback_handler]Action: accept')
                 updater.bot.send_photo(target_channel, open(post.attachment_path, 'rb'), caption=post.text)
                 update.callback_query.answer('✅ Пост успешно отправлен')
-                updater.bot.send_message(post.owner_id, 'Предложенный вами пост был опубликован')
+                updater.bot.send_message(post.owner_id, 'Предложеный вами пост был опубликован')
             elif data['action'] == 'decline':
                 print('[Predlozhka][callback_handler]Action: decline')
                 update.callback_query.answer('Пост отклонен')
